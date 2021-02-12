@@ -41,6 +41,7 @@ function menu() {
 
 	
 	esac
+	menu
 }
 
 function admin_menu() {
@@ -68,6 +69,7 @@ function admin_menu() {
 			admin_menu
 		;;
 	esac
+	admin_menu
 
 }
 
@@ -86,7 +88,7 @@ function vpn_menu() {
 		A|a) bash peer.bash
 			tail -6 wg0.conf |less
 		;;
-		D|d) read "Please enter the user you wish to delete: " u_name
+		D|d) read -p "Please enter the user you wish to delete: " u_name
 			bash manage-users.bash -d -u ${u_name}
 			echo "Deleting the user..."
 			echo "User deleted!"
@@ -102,6 +104,7 @@ function vpn_menu() {
 			vpn_menu
 		;;
 	esac
+	vpn_menu
 }
 
 function security_menu() {
@@ -134,6 +137,7 @@ function security_menu() {
 		;;
 
 	esac
+	security_menu
 }
 
 # Call the main function
