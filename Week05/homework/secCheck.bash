@@ -47,24 +47,24 @@ icmp=$(egrep -i '^net.ipv4.conf.all.accept_redirects' /etc/sysctl.conf | awk ' {
 check "ICMP redirects" "0" "${icmp}"
 
 #Check perms on crontab
-crontab=$(stat /etc/crontab | egrep -i '^Access: \(' | awk ' {  print $5 } ')
-check "Crontab" "0/" "${crontab}"
+crontab=$(stat /etc/crontab | egrep -io '^Access: \(0644' | awk ' {  print $2 } ')
+check "Crontab" "(0644" "${crontab}"
 
 #Check perms on cron.hourly
-cronhourly=$(stat /etc/cron.hourly | egrep -i '^Access: \(' | awk ' {  print $5 } ')
-check "CronHourly" "0/" "${cronhourly}"
+cronhourly=$(stat /etc/cron.hourly | egrep -io '^Access: \(0755' | awk ' {  print $2 } ')
+check "CronHourly" "(0755" "${cronhourly}"
 
 #Check perms on cron.daily
-crondaily=$(stat /etc/cron.daily | egrep -i '^Access: \(' | awk ' {  print $5 } ')
-check "CronDaily" "0/" "${crondaily}"
+crondaily=$(stat /etc/cron.daily | egrep -io '^Access: \(0755' | awk ' {  print $2 } ')
+check "CronDaily" "(0755" "${crondaily}"
 
 #Check perms on cron.weekly
-cronweekly=$(stat /etc/cron.weekly | egrep -i '^Access: \(' | awk ' {  print $5 } ')
-check "CronWeekly" "0/" "${cronweekly}"
+cronweekly=$(stat /etc/cron.weekly | egrep -io '^Access: \(0755' | awk ' {  print $2 } ')
+check "CronWeekly" "(0755" "${cronweekly}"
 
 #Check perms on cron.monthly
-cronmonthly=$(stat /etc/cron.monthly | egrep -i '^Access: \(' | awk ' {  print $5 } ')
-check "CronMonthly" "0/" "${cronmonthly}"
+cronmonthly=$(stat /etc/cron.monthly | egrep -io '^Access: \(0755' | awk ' {  print $2 } ')
+check "CronMonthly" "(0755" "${cronmonthly}"
 
 #Check perms on passwd
 passwd=$(stat /etc/passwd | egrep -i '^Access: \(' | awk ' {  print $5 } ')
@@ -111,8 +111,8 @@ legacygroup=$(grep -i '^\+:' /etc/group)
 check "Legacy Group" "" "${legacygroup}"
 
 #Check for UID 0
-uid0=$(getent passwd | grep :0:)
-check "UID 0" "root:x:0:0:root:/root:usr/bin/zsh" "${uid0}"
+uid0=$(getent passwd | egrep -i '^root' | cut -c 1,2,3,4 )
+check "UID 0" "root" "${uid0}"
 
 
 
